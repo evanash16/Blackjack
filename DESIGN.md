@@ -63,6 +63,7 @@
 ## BlackjackScore (Score)
 
 ### Attributes
+* value (int)
 * soft (boolean)
 
 ### Methods
@@ -71,6 +72,8 @@
 * isGreaterThan(Score other) &rarr; boolean : returns `true` if the maximum value of this score is greater than that of the other
 * isLessThan(Score other) &rarr; boolean : returns `true` if the maximum value of this score is less than that of the other
 * isEqualTo(Score other) &rarr; boolean : returns `true` if the maximum value of this score is equal to that of the other
+* toString() &rarr; String : returns a string representation of the score (ex. `BLACKJACK.toString()` &rarr; `Soft 21`)
+* equals(Object other) &rarr; boolean : returns `true` if `other` is a Score and `isEqualTo(other)` is `true`
 
 ## BlackjackRule (Rule)
 
