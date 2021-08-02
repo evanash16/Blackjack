@@ -25,9 +25,8 @@ public class BlackjackUtil {
             if (card.getValue() == Value.ACE) {
                 if (value + 11 <= 21 && isLast) {
                     value += 11;
-                    continue;
-                } else {
                     soft = true;
+                    continue;
                 }
             }
             value += card.getNumericalValue();

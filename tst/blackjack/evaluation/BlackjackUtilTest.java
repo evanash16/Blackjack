@@ -46,7 +46,7 @@ public class BlackjackUtilTest extends TestBase {
     @Test
     public void testScoreHandWithThreeAcesAndATen() {
         Hand testHand = new Hand(Lists.newArrayList(ACE_OF_CLUBS, ACE_OF_CLUBS, ACE_OF_CLUBS, KING_OF_HEARTS));
-        BlackjackScore expected = new BlackjackScore(13, true);
+        BlackjackScore expected = new BlackjackScore(13, false);
         assertEquals(BlackjackUtil.scoreHand(testHand), expected);
     }
 
@@ -59,12 +59,7 @@ public class BlackjackUtilTest extends TestBase {
 
     @Test
     public void testScoreHandWithBust() {
-        Hand testHand = new Hand(Lists.newArrayList(
-                ACE_OF_CLUBS,
-                KING_OF_HEARTS,
-                new Card(Value.EIGHT, Suit.SPADES),
-                new Card(Value.THREE, Suit.DIAMONDS)));
         BlackjackScore expected = new BlackjackScore(22, false);
-        assertEquals(BlackjackUtil.scoreHand(testHand), expected);
+        assertEquals(BlackjackUtil.scoreHand(BUSTED), expected);
     }
 }

@@ -1,7 +1,9 @@
 package blackjack.evaluation;
 
 import cardgamelib.evaluation.Score;
+import lombok.Getter;
 
+@Getter
 public class BlackjackScore implements Score {
 
     private int value;

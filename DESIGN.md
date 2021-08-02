@@ -92,6 +92,7 @@
   * If the hand has more than two elements, this is not a valid action.
   * If the two cards in the hand aren't of the same denomination, this is not a valid action.
   
+
 ## DoubleDownRule (Rule)
 
 ### Methods
