@@ -22,6 +22,10 @@ public class BlackjackPlayer extends Player {
         this.bets = new HashMap<>();
     }
 
+    public void pay(final int money) {
+        this.money += money;
+    }
+
     public int getBet(final Hand hand) {
         if (!this.bets.containsKey(hand)) {
             throw new NoBetException(String.format("A bet hasn't been placed on the hand '%s'.", hand));

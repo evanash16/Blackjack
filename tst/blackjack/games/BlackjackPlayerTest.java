@@ -14,6 +14,14 @@ import static org.testng.Assert.assertEquals;
 
 public class BlackjackPlayerTest extends TestBase {
 
+    @Test
+    public void testPay() {
+        BlackjackPlayer player = new BlackjackPlayer(10);
+        player.pay(10);
+
+        assertEquals(player.getMoney(), 20);
+    }
+
     @Test(expectedExceptions = {NoBetException.class})
     public void testGetBetFailsWithoutBetOnHand() {
         BlackjackPlayer player = new BlackjackPlayer(100);

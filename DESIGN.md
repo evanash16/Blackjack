@@ -30,6 +30,7 @@
 * hand (Hand)
 
 ### Methods
+* getHand() &rarr; Hand :  return the dealer's hand
 * deal(List<BlackjackPlayer> players) : deal one card to each player, and one card to self.
   * If the dealer already has two cards, an exception should be thrown.
   * The second card should be dealt face down.
@@ -46,6 +47,7 @@
 
 ### Methods
 * getMoney() &rarr; int : returns the amount of money the player has left
+* pay(int money) : pays the player
 * getBet(Hand hand) &rarr; int : returns the amount of money placed on a given hand. If the hand doesn't exist, an exception should be thrown.
 * addToBet(Hand hand, int money) : adds additional money to the hand. If there isn't enough money available, an exception should be thrown.
 * bet(Hand hand, int money) &rarr; int : places a bet on a given hand. If there isn't enough money available, an exception should be thrown.
