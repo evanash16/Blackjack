@@ -3,6 +3,7 @@ package blackjack.games;
 import blackjack.evaluation.DoubleDownRule;
 import blackjack.evaluation.SplitRule;
 import blackjack.exceptions.NoBetException;
+import blackjack.exceptions.NoInsuranceException;
 import blackjack.exceptions.NotEnoughMoneyException;
 import cardgamelib.games.Player;
 import cardgamelib.storage.Hand;
@@ -16,10 +17,12 @@ public class BlackjackPlayer extends Player {
     @Getter
     private int money;
     private Map<Hand, Integer> bets;
+    private Map<Hand, Integer> insurances;
 
     public BlackjackPlayer(final int money) {
         this.money = money;
         this.bets = new HashMap<>();
+        this.insurances = new HashMap<>();
     }
 
     public void pay(final int money) {
@@ -43,6 +46,28 @@ public class BlackjackPlayer extends Player {
         }
         this.money -= money;
         this.bets.put(hand, money);
+    }
+
+    public void insure(final Hand hand, final int money) throws NotEnoughMoneyException {
+        if (this.money <= money) {
+            throw new NotEnoughMoneyException(String.format("Cannot place %d of insurance with %d money remaining.", money, this.money));
+        }
+        this.money -= money;
+        this.insurances.put(hand, money);
+    }
+
+    public int getInsurance(final Hand hand) throws NoInsuranceException {
+        if (!this.insurances.containsKey(hand)) {
+            throw new NoInsuranceException(String.format("Cannot place %d of insurance with %d money remaining", money, this.money));
+        }
+        return this.insurances.get(hand);
+    }
+
+    public int removeInsurance(final Hand hand) throws NoInsuranceException {
+        if (!this.insurances.containsKey(hand)) {
+            throw new NoInsuranceException(String.format("Cannot place %d of insurance with %d money remaining", money, this.money));
+        }
+        return this.insurances.remove(hand);
     }
 
     public void split(final Hand hand) throws NotEnoughMoneyException {

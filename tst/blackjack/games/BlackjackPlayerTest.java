@@ -2,6 +2,7 @@ package blackjack.games;
 
 import blackjack.TestBase;
 import blackjack.exceptions.NoBetException;
+import blackjack.exceptions.NoInsuranceException;
 import blackjack.exceptions.NotEnoughMoneyException;
 import cardgamelib.cards.Card;
 import cardgamelib.cards.Suit;
@@ -39,6 +40,56 @@ public class BlackjackPlayerTest extends TestBase {
         player.bet(newHand, expectedBet);
 
         assertEquals(player.getBet(newHand), expectedBet);
+    }
+
+    @Test
+    public void testInsure() throws Exception {
+        BlackjackPlayer player = new BlackjackPlayer(100);
+        Hand newHand = player.addHand();
+
+        int expectedInsurance = 5;
+        player.bet(newHand, 10);
+        player.insure(newHand, expectedInsurance);
+
+        assertEquals(player.getMoney(), 85);
+        assertEquals(player.getInsurance(newHand), expectedInsurance);
+    }
+
+    @Test(expectedExceptions = {NotEnoughMoneyException.class})
+    public void testInsureFailsWithNoMoney() throws Exception {
+        BlackjackPlayer player = new BlackjackPlayer(5);
+        Hand newHand = player.addHand();
+        player.insure(newHand, 10);
+    }
+
+    @Test(expectedExceptions = {NoInsuranceException.class})
+    public void testGetInsuranceFailsWithNoInsurance() throws Exception {
+        BlackjackPlayer player = new BlackjackPlayer(100);
+        Hand newHand = player.addHand();
+
+        player.getInsurance(newHand);
+    }
+
+    @Test
+    public void testRemoveInsurance() throws Exception {
+        BlackjackPlayer player = new BlackjackPlayer(100);
+        Hand newHand = player.addHand();
+
+        int expectedBet = 10;
+        int expectedInsurance = 5;
+        player.bet(newHand, expectedBet);
+        player.insure(newHand, expectedInsurance);
+
+        assertEquals(player.getMoney(), 85);
+        assertEquals(player.removeInsurance(newHand), 5);
+    }
+
+    @Test(expectedExceptions = {NoInsuranceException.class})
+    public void testRemoveInsuranceFailsWithNoInsurance() throws Exception {
+        BlackjackPlayer player = new BlackjackPlayer(100);
+        Hand newHand = player.addHand();
+
+        player.removeInsurance(newHand);
     }
 
     @Test

@@ -44,13 +44,20 @@
 ### Attributes
 * money (int)
 * bets (Map<Hand, int>)
+* insurances (Map<Hand, int>)
 
 ### Methods
 * getMoney() &rarr; int : returns the amount of money the player has left
 * pay(int money) : pays the player
-* getBet(Hand hand) &rarr; int : returns the amount of money placed on a given hand. If the hand doesn't exist, an exception should be thrown.
+* getBet(Hand hand) &rarr; int : returns the amount of money placed on a given hand. If no bet has been placed on the hand, an exception should be thrown.
+* removeBet(Hand hand) &rarr; int : removes a bet on a hand, and returns the amount of money placed on the hand. If no bet has been placed on the hand, an exception should be thrown.
 * addToBet(Hand hand, int money) : adds additional money to the hand. If there isn't enough money available, an exception should be thrown.
 * bet(Hand hand, int money) &rarr; int : places a bet on a given hand. If there isn't enough money available, an exception should be thrown.
+* insure(Hand hand, int money) : places an insurance bet on a given hand. 
+  * If there isn't enough money available, an exception should be thrown. 
+  * If no bet has been placed on the hand, an exception should be thrown.
+* getInsurance(Hand hand) &rarr; int : returns the amount of insurances placed on a given hand. If no insurance has been placed, an exception should be thrown.
+* removeInsurance(Hand hand) &rarr; int: removes insurance on a hand, and returns the amount of money placed on the hand. If no insurance has been placed on the hand, an exception should be thrown.
 * split(Hand hand) : effectively wraps `hand.moveCard(Card card)`. If there isn't enough money available, an exception should be thrown.
 * doubleDown(Hand hand) : doubles the bet on a given hand. If there isn't enough money available, an exception should be thrown.
 
