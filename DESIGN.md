@@ -46,11 +46,11 @@
 
 ### Methods
 * getMoney() &rarr; int : returns the amount of money the player has left
-* getBet(Hand hand) &rarr; int : returns the amount of money placed on a given hand
+* getBet(Hand hand) &rarr; int : returns the amount of money placed on a given hand. If the hand doesn't exist, an exception should be thrown.
 * addToBet(Hand hand, int money) : adds additional money to the hand. If there isn't enough money available, an exception should be thrown.
 * bet(Hand hand, int money) &rarr; int : places a bet on a given hand. If there isn't enough money available, an exception should be thrown.
-* split(Hand hand) &rarr; effectively wraps `hand.moveCard(Card card)`.
-* doubleDown(Hand hand) &rarr; doubles the bet on a given hand.
+* split(Hand hand) : effectively wraps `hand.moveCard(Card card)`. If there isn't enough money available, an exception should be thrown.
+* doubleDown(Hand hand) : doubles the bet on a given hand. If there isn't enough money available, an exception should be thrown.
 
 # Evaluation
 
