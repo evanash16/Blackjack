@@ -20,6 +20,8 @@ public class BlackjackPlayer extends Player {
     private Map<Hand, Integer> insurances;
 
     public BlackjackPlayer(final int money) {
+        super();
+
         this.money = money;
         this.bets = new HashMap<>();
         this.insurances = new HashMap<>();
@@ -36,11 +38,18 @@ public class BlackjackPlayer extends Player {
         return this.bets.get(hand);
     }
 
-    public void addToBet(final Hand hand, final int money) throws NotEnoughMoneyException {
+    public int removeBet(final Hand hand) {
+        if (!this.bets.containsKey(hand)) {
+            throw new NoBetException(String.format("A bet hasn't been placed on the hand '%s'.", hand));
+        }
+        return this.bets.remove(hand);
+    }
+
+    public void addToBet(final Hand hand, final int money) {
         bet(hand, this.bets.getOrDefault(hand, 0) + money);
     }
 
-    public void bet(final Hand hand, final int money) throws NotEnoughMoneyException {
+    public void bet(final Hand hand, final int money) {
         if (this.money < money) {
             throw new NotEnoughMoneyException(String.format("Cannot add %d to bet with %d money remaining.", money, this.money));
         }
@@ -48,7 +57,7 @@ public class BlackjackPlayer extends Player {
         this.bets.put(hand, money);
     }
 
-    public void insure(final Hand hand, final int money) throws NotEnoughMoneyException {
+    public void insure(final Hand hand, final int money) {
         if (this.money <= money) {
             throw new NotEnoughMoneyException(String.format("Cannot place %d of insurance with %d money remaining.", money, this.money));
         }
@@ -56,21 +65,21 @@ public class BlackjackPlayer extends Player {
         this.insurances.put(hand, money);
     }
 
-    public int getInsurance(final Hand hand) throws NoInsuranceException {
+    public int getInsurance(final Hand hand) {
         if (!this.insurances.containsKey(hand)) {
-            throw new NoInsuranceException(String.format("Cannot place %d of insurance with %d money remaining", money, this.money));
+            throw new NoInsuranceException(String.format("Insurance hasn't been played on the hand '%s'", hand));
         }
         return this.insurances.get(hand);
     }
 
-    public int removeInsurance(final Hand hand) throws NoInsuranceException {
+    public int removeInsurance(final Hand hand) {
         if (!this.insurances.containsKey(hand)) {
-            throw new NoInsuranceException(String.format("Cannot place %d of insurance with %d money remaining", money, this.money));
+            throw new NoInsuranceException(String.format("Insurance hasn't been played on the hand '%s'", hand));
         }
         return this.insurances.remove(hand);
     }
 
-    public void split(final Hand hand) throws NotEnoughMoneyException {
+    public void split(final Hand hand) {
         if (!SplitRule.passes(hand)) {
             return;
         }
@@ -85,7 +94,7 @@ public class BlackjackPlayer extends Player {
         bet(newHand, currentBet);
     }
 
-    public void doubleDown(final Hand hand) throws NotEnoughMoneyException {
+    public void doubleDown(final Hand hand) {
         if (!DoubleDownRule.passes(hand)) {
             return;
         }

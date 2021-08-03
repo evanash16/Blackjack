@@ -17,12 +17,11 @@ import static org.testng.Assert.assertNotEquals;
 public class BlackjackDealerTest extends TestBase {
 
     @Test
-    public void testDeal() throws Exception {
+    public void testDeal() {
         BlackjackDealer dealer = new BlackjackDealer(6);
         BlackjackPlayer player = new BlackjackPlayer(100);
         List<BlackjackPlayer> players = Lists.newArrayList(player);
 
-        dealer.deal(players);
         dealer.deal(players);
 
         assertEquals(dealer.getHand().getCards().size(), 2);
@@ -30,7 +29,7 @@ public class BlackjackDealerTest extends TestBase {
     }
 
     @Test
-    public void testPay() throws Exception {
+    public void testPay() {
         BlackjackDealer dealer = new BlackjackDealer(6);
         BlackjackPlayer player = new BlackjackPlayer(100);
         List<BlackjackPlayer> players = Lists.newArrayList(player);
@@ -44,7 +43,7 @@ public class BlackjackDealerTest extends TestBase {
     }
 
     @Test
-    public void testPayWithPlayerBlackjack() throws Exception {
+    public void testPayWithPlayerBlackjack() {
         BlackjackDealer dealer = new BlackjackDealer(6);
         BlackjackPlayer player = new BlackjackPlayer(100);
         List<BlackjackPlayer> players = Lists.newArrayList(player);
@@ -58,7 +57,7 @@ public class BlackjackDealerTest extends TestBase {
     }
 
     @Test
-    public void testPayWithBlackjackStandoff() throws Exception {
+    public void testPayWithBlackjackStandoff() {
         BlackjackDealer dealer = new BlackjackDealer(6);
         BlackjackPlayer player = new BlackjackPlayer(100);
         List<BlackjackPlayer> players = Lists.newArrayList(player);
@@ -66,13 +65,14 @@ public class BlackjackDealerTest extends TestBase {
         dealer.getHand().addCards(Lists.newArrayList(KING_OF_HEARTS, ACE_OF_CLUBS));
         player.addHand().addCards(Lists.newArrayList(KING_OF_HEARTS, ACE_OF_CLUBS));
         player.bet(player.getHand(), 10);
+        player.insure(player.getHand(), 0);
 
         dealer.pay(players);
         assertEquals(player.getMoney(), 100);
     }
 
     @Test
-    public void testPayWhenDealerBusts() throws Exception {
+    public void testPayWhenDealerBusts() {
         BlackjackDealer dealer = new BlackjackDealer(6);
         BlackjackPlayer player = new BlackjackPlayer(100);
         List<BlackjackPlayer> players = Lists.newArrayList(player);
@@ -86,7 +86,7 @@ public class BlackjackDealerTest extends TestBase {
     }
 
     @Test
-    public void testPayWhenDealerAndPlayerBust() throws Exception {
+    public void testPayWhenDealerAndPlayerBust() {
         BlackjackDealer dealer = new BlackjackDealer(6);
         BlackjackPlayer player = new BlackjackPlayer(100);
         List<BlackjackPlayer> players = Lists.newArrayList(player);
@@ -100,7 +100,7 @@ public class BlackjackDealerTest extends TestBase {
     }
 
     @Test
-    public void testPayOnSplit() throws Exception {
+    public void testPayOnSplit() {
         BlackjackDealer dealer = new BlackjackDealer(6);
         BlackjackPlayer player = new BlackjackPlayer(100);
         List<BlackjackPlayer> players = Lists.newArrayList(player);
@@ -119,7 +119,7 @@ public class BlackjackDealerTest extends TestBase {
     }
 
     @Test
-    public void testPlay() throws Exception {
+    public void testPlay() {
         BlackjackDealer dealer = new BlackjackDealer(6);
         dealer.getHand().addCards(Lists.newArrayList(KING_OF_HEARTS, new Card(Value.SIX, Suit.DIAMONDS)));
 
@@ -129,12 +129,23 @@ public class BlackjackDealerTest extends TestBase {
     }
 
     @Test
-    public void testPlayAtLimit() throws Exception {
+    public void testPlayAtLimit() {
         BlackjackDealer dealer = new BlackjackDealer(6);
         dealer.getHand().addCards(Lists.newArrayList(ACE_OF_CLUBS, new Card(Value.SIX, Suit.DIAMONDS)));
 
         dealer.play();
 
         assertEquals(BlackjackUtil.scoreHand(dealer.getHand()).getNumericalValue(), 17);
+    }
+
+    @Test
+    public void testPlayWithWeirdEdgeCase() {
+        BlackjackDealer dealer = new BlackjackDealer(6);
+        dealer.shuffle(10);
+        dealer.getHand().addCards(Lists.newArrayList(
+                new Card(Value.TEN, Suit.DIAMONDS),
+                new Card(Value.FOUR, Suit.HEARTS)));
+
+        dealer.play();
     }
 }

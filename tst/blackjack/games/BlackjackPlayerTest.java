@@ -32,7 +32,7 @@ public class BlackjackPlayerTest extends TestBase {
     }
 
     @Test
-    public void testBet() throws Exception {
+    public void testBet() {
         BlackjackPlayer player = new BlackjackPlayer(100);
         Hand newHand = player.addHand();
 
@@ -43,7 +43,7 @@ public class BlackjackPlayerTest extends TestBase {
     }
 
     @Test
-    public void testInsure() throws Exception {
+    public void testInsure() {
         BlackjackPlayer player = new BlackjackPlayer(100);
         Hand newHand = player.addHand();
 
@@ -56,14 +56,14 @@ public class BlackjackPlayerTest extends TestBase {
     }
 
     @Test(expectedExceptions = {NotEnoughMoneyException.class})
-    public void testInsureFailsWithNoMoney() throws Exception {
+    public void testInsureFailsWithNoMoney() {
         BlackjackPlayer player = new BlackjackPlayer(5);
         Hand newHand = player.addHand();
         player.insure(newHand, 10);
     }
 
     @Test(expectedExceptions = {NoInsuranceException.class})
-    public void testGetInsuranceFailsWithNoInsurance() throws Exception {
+    public void testGetInsuranceFailsWithNoInsurance() {
         BlackjackPlayer player = new BlackjackPlayer(100);
         Hand newHand = player.addHand();
 
@@ -71,7 +71,7 @@ public class BlackjackPlayerTest extends TestBase {
     }
 
     @Test
-    public void testRemoveInsurance() throws Exception {
+    public void testRemoveInsurance() {
         BlackjackPlayer player = new BlackjackPlayer(100);
         Hand newHand = player.addHand();
 
@@ -85,7 +85,7 @@ public class BlackjackPlayerTest extends TestBase {
     }
 
     @Test(expectedExceptions = {NoInsuranceException.class})
-    public void testRemoveInsuranceFailsWithNoInsurance() throws Exception {
+    public void testRemoveInsuranceFailsWithNoInsurance() {
         BlackjackPlayer player = new BlackjackPlayer(100);
         Hand newHand = player.addHand();
 
@@ -93,7 +93,7 @@ public class BlackjackPlayerTest extends TestBase {
     }
 
     @Test
-    public void testAddToBet() throws Exception {
+    public void testAddToBet() {
         BlackjackPlayer player = new BlackjackPlayer(100);
         Hand newHand = player.addHand();
 
@@ -106,7 +106,7 @@ public class BlackjackPlayerTest extends TestBase {
     }
 
     @Test(expectedExceptions = {NotEnoughMoneyException.class})
-    public void testBetFailsWithOverBet() throws Exception {
+    public void testBetFailsWithOverBet() {
         BlackjackPlayer player = new BlackjackPlayer(5);
         Hand newHand = player.addHand();
 
@@ -114,7 +114,7 @@ public class BlackjackPlayerTest extends TestBase {
     }
 
     @Test
-    public void testSplit() throws Exception {
+    public void testSplit() {
         BlackjackPlayer player = new BlackjackPlayer(100);
         Hand newHand = player.addHand();
 
@@ -131,7 +131,7 @@ public class BlackjackPlayerTest extends TestBase {
     }
 
     @Test
-    public void testSplitFailsAsNoop() throws Exception {
+    public void testSplitFailsAsNoop() {
         BlackjackPlayer player = new BlackjackPlayer(100);
         Hand newHand = player.addHand();
 
@@ -145,7 +145,7 @@ public class BlackjackPlayerTest extends TestBase {
     }
 
     @Test(expectedExceptions = {NotEnoughMoneyException.class})
-    public void testSplitFailsAsNoopWithNotEnoughMoney() throws Exception {
+    public void testSplitFailsAsNoopWithNotEnoughMoney() {
         BlackjackPlayer player = new BlackjackPlayer(10);
         Hand newHand = player.addHand();
 
@@ -159,7 +159,7 @@ public class BlackjackPlayerTest extends TestBase {
     }
 
     @Test
-    public void testDoubleDown() throws Exception {
+    public void testDoubleDown() {
         BlackjackPlayer player = new BlackjackPlayer(100);
         Hand newHand = player.addHand();
 
@@ -174,7 +174,7 @@ public class BlackjackPlayerTest extends TestBase {
     }
 
     @Test
-    public void testDoubleDownFailsAsNoop() throws Exception {
+    public void testDoubleDownFailsAsNoop() {
         BlackjackPlayer player = new BlackjackPlayer(100);
         Hand newHand = player.addHand();
 
@@ -189,7 +189,7 @@ public class BlackjackPlayerTest extends TestBase {
     }
 
     @Test(expectedExceptions = {NotEnoughMoneyException.class})
-    public void testDoubleDownFailsAsNoopWithNotEnoughMoney() throws Exception {
+    public void testDoubleDownFailsAsNoopWithNotEnoughMoney() {
         BlackjackPlayer player = new BlackjackPlayer(10);
         Hand newHand = player.addHand();
 

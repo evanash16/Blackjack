@@ -1,9 +1,6 @@
 package blackjack.games;
 
-import blackjack.evaluation.BlackjackRule;
-import blackjack.evaluation.BlackjackScore;
-import blackjack.evaluation.BlackjackUtil;
-import blackjack.evaluation.BustRule;
+import blackjack.evaluation.*;
 import cardgamelib.exceptions.EmptyDeckException;
 import cardgamelib.exceptions.NoHandsException;
 import cardgamelib.games.Dealer;
@@ -22,41 +19,47 @@ public class BlackjackDealer extends Dealer {
         hand = new Hand();
     }
 
-    public void deal(final List<BlackjackPlayer> players) throws EmptyDeckException {
-        for (BlackjackPlayer player : players) {
-            Hand playerHand;
-            try {
-                playerHand = player.getHand();
-            } catch (NoHandsException e) {
-                playerHand = player.addHand();
+    public void deal(final List<BlackjackPlayer> players) {
+        for (int i = 0; i < 2; i++) {
+            for (BlackjackPlayer player : players) {
+                Hand playerHand;
+                try {
+                    playerHand = player.getHand();
+                } catch (NoHandsException e) {
+                    playerHand = player.addHand();
+                }
+
+                deal(1, playerHand);
             }
 
-            deal(1, playerHand);
+            deal(1, this.hand);
         }
-
-        deal(1, this.hand);
     }
 
-    public void pay(final List<BlackjackPlayer> players) throws NoHandsException {
+    public void pay(final List<BlackjackPlayer> players) {
         BlackjackScore dealerScore = BlackjackUtil.scoreHand(this.hand);
         for (BlackjackPlayer player : players) {
             do {
                 BlackjackScore playerScore = BlackjackUtil.scoreHand(player.getHand());
                 Hand playerHand = player.getHand();
                 if (!BustRule.passes(playerHand)) {
-                    if (BlackjackRule.passes(playerHand) && !BlackjackRule.passes(this.hand)) {
-                        player.pay((int) ((double) player.getBet(playerHand) * 2.5)); // blackjack
+                    if (NaturalBlackjackRule.passes(this.hand)) {
+                        player.pay((int) ((double) player.removeInsurance(playerHand) * 3)); // insurances
+                    }
+
+                    if (NaturalBlackjackRule.passes(playerHand) && !BlackjackRule.passes(this.hand)) {
+                        player.pay((int) ((double) player.removeBet(playerHand) * 2.5)); // blackjack
                     } else if (BustRule.passes(this.hand) || playerScore.isGreaterThan(dealerScore)) {
-                        player.pay(player.getBet(playerHand) * 2); // settlement or win
+                        player.pay(player.removeBet(playerHand) * 2); // settlement or win
                     } else if (playerScore.isEqualTo(dealerScore)) {
-                        player.pay(player.getBet(playerHand)); // stand-off
+                        player.pay(player.removeBet(playerHand)); // stand-off
                     }
                 }
             } while (player.nextHand() != null);
         }
     }
 
-    public void play() throws EmptyDeckException {
+    public void play() {
         while (BlackjackUtil.scoreHand(this.hand).getNumericalValue() < 17) {
             deal(1, this.hand);
         }

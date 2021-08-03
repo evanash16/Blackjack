@@ -62,4 +62,11 @@ public class BlackjackUtilTest extends TestBase {
         BlackjackScore expected = new BlackjackScore(22, false);
         assertEquals(BlackjackUtil.scoreHand(BUSTED), expected);
     }
+
+    @Test
+    public void testScoreHandWithSUPERBust() {
+        Hand testHand = new Hand(Lists.newArrayList(EIGHT_OF_SPADES, new Card(Value.SIX, Suit.CLUBS), KING_OF_HEARTS));
+        BlackjackScore expected = new BlackjackScore(24, false);
+        assertEquals(BlackjackUtil.scoreHand(testHand), expected);
+    }
 }

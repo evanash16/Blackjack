@@ -7,8 +7,8 @@
   1. If there aren't enough cards to play (somewhere between 60 and 75 cards remaining), the deck is shuffled.
   1. Collect bets from each player (min. $2, max. $500).
   1. Deal one card to each player, and one face up to the dealer.
-  1. If the upcard is an ace, collect an optional insurance (up to half of their bet) from each player.
   1. Deal a second card to each player, and one face down to the dealer.
+  1. If the upcard is an ace, collect an optional insurance (up to half of their bet) from each player.
     * If the dealer doesn't have blackjack, pay out all "natural" Blackjacks 1.5:1.
     * If the dealer has blackjack, pay all insurances 2:1.
   1. For each remaining player, take their action (stand, hit, split, double down).
@@ -31,7 +31,7 @@
 
 ### Methods
 * getHand() &rarr; Hand :  return the dealer's hand
-* deal(List<BlackjackPlayer> players) : deal one card to each player, and one card to self.
+* deal(List<BlackjackPlayer> players) : deal one card to each player, and one card face up to self. Then deal one card to each player, and one card face down to self.
   * If the dealer already has two cards, an exception should be thrown.
   * The second card should be dealt face down.
 * pay(List<BlackjackPlayer> players) : for each player's hand(s), pay out or collect bets
