@@ -80,22 +80,19 @@ public class BlackjackGame extends Game<BlackjackDealer, BlackjackPlayer> {
 
         for (BlackjackPlayer player : players) {
             do {
-                boolean done = false;
-                if (done) {
-                    break;
-                }
-
                 Hand playerHand = player.getHand();
                 printPlayer(player);
 
                 List<Action> validActions = new ArrayList<>(Arrays.asList(Action.STAND, Action.HIT));
-                if (SplitRule.passes(playerHand)) {
+                boolean enoughMoney = player.getMoney() >= player.getBet(playerHand);
+                if (enoughMoney && SplitRule.passes(playerHand)) {
                     validActions.add(Action.SPLIT);
                 }
-                if (DoubleDownRule.passes(playerHand)) {
+                if (enoughMoney && DoubleDownRule.passes(playerHand)) {
                     validActions.add(Action.DOUBLEDOWN);
                 }
                 Action selectedAction;
+                boolean done = false;
                 do {
                     int selection;
                     do {
@@ -118,8 +115,8 @@ public class BlackjackGame extends Game<BlackjackDealer, BlackjackPlayer> {
                             player.split(playerHand);
                             break;
                         case DOUBLEDOWN:
-                            validActions.remove(Action.DOUBLEDOWN);
                             validActions.remove(Action.SPLIT);
+                            validActions.remove(Action.DOUBLEDOWN);
                             player.doubleDown(playerHand);
                             dealer.deal(1, playerHand);
                             done = true;
@@ -129,7 +126,7 @@ public class BlackjackGame extends Game<BlackjackDealer, BlackjackPlayer> {
                             break;
                     }
                     printPlayer(player);
-                } while (!done && selectedAction != Action.STAND && !BustRule.passes(playerHand));
+                } while (!done && !BustRule.passes(playerHand) && !BlackjackRule.passes(playerHand));
             } while (player.nextHand() != null);
         }
 
@@ -159,7 +156,7 @@ public class BlackjackGame extends Game<BlackjackDealer, BlackjackPlayer> {
     private void printPlayer(final BlackjackPlayer player) {
         Hand currentHand = player.getHand();
         System.out.println("------------------------");
-        System.out.println(String.format("Money: %d", player.getMoney()));
+        System.out.println(String.format("Money: $%d", player.getMoney()));
         System.out.println(String.format("Bet: $%d", player.getBet(currentHand)));
         try {
             System.out.println(String.format("Insurance: $%d", player.getInsurance(currentHand)));

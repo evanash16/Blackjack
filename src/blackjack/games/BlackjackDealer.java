@@ -1,6 +1,7 @@
 package blackjack.games;
 
 import blackjack.evaluation.*;
+import cardgamelib.cards.Value;
 import cardgamelib.exceptions.EmptyDeckException;
 import cardgamelib.exceptions.NoHandsException;
 import cardgamelib.games.Dealer;
@@ -43,7 +44,7 @@ public class BlackjackDealer extends Dealer {
                 BlackjackScore playerScore = BlackjackUtil.scoreHand(player.getHand());
                 Hand playerHand = player.getHand();
                 if (!BustRule.passes(playerHand)) {
-                    if (NaturalBlackjackRule.passes(this.hand)) {
+                    if (NaturalBlackjackRule.passes(this.hand) && this.hand.getCards().get(0).getValue() == Value.ACE) {
                         player.pay((int) ((double) player.removeInsurance(playerHand) * 3)); // insurances
                     }
 
